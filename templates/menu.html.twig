@@ -1,0 +1,11 @@
+{% block body %}
+<nav>
+    <ul>
+        <li><a href="{{ path('index') }}">Home</a></li>
+        <li><a href="{{ path('about') }}">About</a></li>
+        <li><a href="{{ path('hello', {name: 'Guest'}) }}">Hello</a></li>
+        <li><a href="{{ path('list') }}">Liste</a></li>
+        <li><a href="{{ path('random') }}">Random Quote</a></li>
+    </ul>
+</nav>
+{% endblock %}

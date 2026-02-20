@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats - {{ attempt.quiz.title }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/quiz.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="quiz-container fade-in">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="results-card">
+                    <div class="results-emoji">
+                        {% if percentage >= 80 %}
+                            🎉
+                        {% elseif percentage >= 50 %}
+                            👍
+                        {% else %}
+                            📚
+                        {% endif %}
+                    </div>
+                    
+                    <h1 class="results-title">{{ attempt.quiz.title }}</h1>
+
+                    <div class="results-score">
+                        {{ attempt.score }}/{{ attempt.totalQuestions }}
+                    </div>
+                    
+                    <p class="results-percentage">{{ percentage|round }}% de réussite</p>
+
+                    <div class="results-message {% if percentage >= 80 %}success{% elseif percentage >= 50 %}warning{% else %}info{% endif %}">
+                        {% if percentage >= 80 %}
+                            <strong> Excellent !</strong><br>
+                            Vous maîtrisez parfaitement le sujet !
+                        {% elseif percentage >= 50 %}
+                            <strong> Bien joué !</strong><br>
+                            Vous avez de bonnes connaissances.
+                        {% else %}
+                            <strong>📖 Continuez à apprendre !</strong><br>
+                            La pratique mène à la perfection.
+                        {% endif %}
+                    </div>
+
+                    {# Temps écoulé #}
+                    {% if attempt.completedAt and attempt.startedAt %}
+                        {% set duration = attempt.completedAt.diff(attempt.startedAt) %}
+                        <p style="color: var(--gray-text); margin-top: 20px;">
+                            <i class="bi bi-clock"></i> 
+                            Temps : {{ duration.i }} min {{ duration.s }} sec
+                        </p>
+                    {% endif %}
+
+                    <div class="results-actions">
+                        <a href="{{ path('app_quiz_take_start', {'id': attempt.quiz.id}) }}" 
+                           class="results-btn-primary">
+                            <i class="bi bi-arrow-clockwise"></i> Refaire ce quiz
+                        </a>
+                        <a href="{{ path('app_quiz_take_index') }}" 
+                           class="results-btn-secondary">
+                            <i class="bi bi-list-ul"></i> Autres quiz
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Tableau dynamique (dans l'idéal){% endblock %}
+
+{% block body %}
+    <h1>Tableau de sports</h1>
+    
+    <p>Nombre total d'éléments : {{ items|length }}</p>
+    
+    <div class="items-list">
+        {% for item in items %}
+            <div class="item {% if item.popular %}popular{% endif %}">
+                <h2>{{ item.title }}</h2>
+                <p>{{ item.description }}</p>
+                <small>Date : {{ item.date|date('d/m/Y') }}</small>
+                
+                {% if item.popular %}
+                    <span class="badge">Populaire</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

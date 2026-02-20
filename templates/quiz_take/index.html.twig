@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Passer un Quiz{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/quiz.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="quiz-container fade-in">
+        <div class="page-header">
+            <h1 class="page-title">Quiz Disponibles</h1>
+            <p class="page-subtitle">Choisissez un quiz pour tester vos connaissances !</p>
+        </div>
+
+        <div class="row g-4">
+            {% for quiz in quizzes %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="quiz-card">
+                        <h2 class="quiz-card-title">{{ quiz.title }}</h2>
+                        <p class="quiz-card-description">
+                            {{ quiz.description|slice(0, 120) }}{% if quiz.description|length > 120 %}...{% endif %}
+                        </p>
+                        <div class="quiz-card-meta">
+                            <i class="bi bi-question-circle-fill"></i>
+                            <span>{{ quiz.questions|length }} question{{ quiz.questions|length > 1 ? 's' : '' }}</span>
+                        </div>
+                        <a href="{{ path('app_quiz_take_start', {'id': quiz.id}) }}" class="quiz-start-btn">
+                            <i class="bi bi-play-fill"></i> Commencer le quiz
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        Aucun quiz disponible pour le moment.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

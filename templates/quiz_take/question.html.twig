@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ attempt.quiz.title }} - Question {{ questionIndex + 1 }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/quiz.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="quiz-container fade-in">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                {# En-tête avec progression #}
+                <div class="quiz-header">
+                    <h1 class="quiz-header-title">{{ attempt.quiz.title }}</h1>
+                    
+                    <div class="quiz-progress-info">
+                        <span class="quiz-badge">
+                            Question {{ questionIndex + 1 }} / {{ totalQuestions }}
+                        </span>
+                        <span class="quiz-score">
+                            Score : {{ attempt.score }} point{{ attempt.score > 1 ? 's' : '' }}
+                        </span>
+                    </div>
+                    
+                    <div class="quiz-progress-bar">
+                        <div class="quiz-progress-fill" 
+                             style="width: {{ ((questionIndex + 1) / totalQuestions * 100)|round }}%">
+                            {{ ((questionIndex + 1) / totalQuestions * 100)|round }}%
+                        </div>
+                    </div>
+                </div>
+
+                {# Question #}
+                <div class="question-card">
+                    <h2 class="question-title">{{ question.content }}</h2>
+                    
+                    {# Image de la question #}
+                    {% if question.imageName %}
+                        <div class="question-image">
+                            <img src="{{ vich_uploader_asset(question, 'imageFile') }}" 
+                                 alt="Illustration de la question">
+                        </div>
+                    {% endif %}
+
+                    {# Formulaire de réponse #}
+                    <form method="post" action="{{ path('app_quiz_take_answer', {'attemptId': attempt.id}) }}">
+                        <input type="hidden" name="question_id" value="{{ question.id }}">
+                        <input type="hidden" name="question_index" value="{{ questionIndex }}">
+                        
+                        <ul class="answers-list">
+                            {% for answer in question.answers %}
+                                <li class="answer-item">
+                                    <input type="radio" 
+                                           name="answer_id" 
+                                           value="{{ answer.id }}" 
+                                           id="answer_{{ answer.id }}"
+                                           required>
+                                    <label for="answer_{{ answer.id }}" class="answer-text">
+                                        {{ answer.text }}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        <button type="submit" class="submit-button">
+                            {% if questionIndex + 1 < totalQuestions %}
+                                Question suivante <i class="bi bi-arrow-right-circle-fill"></i>
+                            {% else %}
+                                Terminer le quiz <i class="bi bi-check-circle-fill"></i>
+                            {% endif %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

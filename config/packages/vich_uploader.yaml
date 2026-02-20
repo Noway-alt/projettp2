@@ -1,0 +1,8 @@
+vich_uploader:
+    db_driver: orm
+    
+    mappings:
+        question_images:
+            uri_prefix: /uploads/questions
+            upload_destination: '%kernel.project_dir%/public/uploads/questions'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Question Quelconque{% endblock %}
+
+{% block body %}
+
+    {{form_start(form)}}
+        {{form_row(form.réponseA)}}
+        {{form_row(form.réponseB)}}
+        {{form_row(form.réponseC)}}
+        {{form_row(form.réponseD)}}
+        <input type="submit" value="Envoyer"></input>
+    {{form_end(form)}}
+
+{% endblock %}
