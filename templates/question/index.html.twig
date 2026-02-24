@@ -3,35 +3,52 @@
 {% block title %}Question index{% endblock %}
 
 {% block body %}
-    <h1>Question index</h1>
+    <div class="container mt-4">
+        <h1>Questions</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Content</th>
-                <th>Image</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for question in questions %}
-            <tr>
-                <td>{{ question.id }}</td>
-                <td>{{ question.content }}</td>
-                <td>{{ question.image }}</td>
-                <td>
-                    <a href="{{ path('app_question_show', {'id': question.id}) }}">show</a>
-                    <a href="{{ path('app_question_edit', {'id': question.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <div class="mb-3">
+            <a href="{{ path('app_question_new') }}" class="btn btn-primary">Créer une nouvelle question</a>
+        </div>
 
-    <a href="{{ path('app_question_new') }}">Create new</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Contenu</th>
+                    <th>Image</th>
+                    <th>Quiz</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for question in questions %}
+                <tr>
+                    <td>{{ question.id }}</td>
+                    <td>{{ question.content|slice(0, 100) }}{% if question.content|length > 100 %}...{% endif %}</td>
+                    <td>
+                        {% if question.imageName %}
+                            <img src="{{ vich_uploader_asset(question, 'imageFile') }}" 
+                                 alt="Image" 
+                                 class="img-thumbnail"
+                                 style="max-width: 100px; max-height: 100px;">
+                        {% else %}
+                            <span class="text-muted">Pas d'image</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ question.quiz ? question.quiz.title : 'N/A' }}</td>
+                    <td>
+                        <a href="{{ path('app_question_show', {'id': question.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                        <a href="{{ path('app_question_edit', {'id': question.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">Aucune question trouvée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_quiz_index') }}" class="btn btn-secondary">Retour aux quiz</a>
+    </div>
 {% endblock %}
