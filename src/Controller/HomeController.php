@@ -24,7 +24,7 @@ class HomeController extends AbstractController
     #[Route("/hello/{name}", name:"hello")]
     public function hello($name): Response
     {
-        return $this->render("hello.html.twig", ["name"=>ucfirst($name)]);
+        return $this->render("hello.html.twig", ["name"=>ucfirst($name)]); 
     }
 
 
