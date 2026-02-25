@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Answer{% endblock %}
+{% block title %}Réponse{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
@@ -9,7 +9,7 @@
         <table class="table">
             <tbody>
                 <tr>
-                    <th>Id</th>
+                    <th>ID</th>
                     <td>{{ answer.id }}</td>
                 </tr>
                 <tr>
@@ -17,7 +17,7 @@
                     <td>{{ answer.text }}</td>
                 </tr>
                 <tr>
-                    <th>Correcte ?</th>
+                    <th>Réponse correcte ?</th>
                     <td>
                         {% if answer.isCorrect %}
                             <span class="badge bg-success">✓ Oui</span>
@@ -27,13 +27,26 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Question</th>
-                    <td>{{ answer.question ? answer.question.content : 'N/A' }}</td>
+                    <th>Question associée</th>
+                    <td>
+                        {% if answer.question %}
+                            {{ answer.question.content|slice(0, 100) }}
+                            {% if answer.question.content|length > 100 %}...{% endif %}
+                        {% else %}
+                            <span class="text-muted">Aucune question associée</span>
+                        {% endif %}
+                    </td>
                 </tr>
             </tbody>
         </table>
 
-        <a href="{{ path('app_answer_index') }}" class="btn btn-secondary">Retour à la liste</a>
-        <a href="{{ path('app_answer_edit', {'id': answer.id}) }}" class="btn btn-warning">Modifier</a>
+        <div class="mt-3">
+            <a href="{{ path('app_answer_index') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Retour à la liste
+            </a>
+            <a href="{{ path('app_answer_edit', {'id': answer.id}) }}" class="btn btn-warning">
+                <i class="bi bi-pencil"></i> Modifier
+            </a>
+        </div>
     </div>
 {% endblock %}
