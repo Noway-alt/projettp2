@@ -10,8 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/answer')]
+#[IsGranted('ROLE_USER')]
 final class AnswerController extends AbstractController
 {
     #[Route(name: 'app_answer_index', methods: ['GET'])]
