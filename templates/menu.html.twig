@@ -7,6 +7,11 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_quiz_take_index') }}">
+                        <i class="bi bi-play-circle"></i> Passer un Quiz
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_quiz_index') }}">
                         <i class="bi bi-grid"></i> Gérer les Quiz
                     </a>
@@ -30,5 +35,4 @@
                 {% endif %}
             </ul>
         </div>
-    </div>
-</nav>
+    </nav>
