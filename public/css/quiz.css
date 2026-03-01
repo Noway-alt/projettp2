@@ -1209,3 +1209,93 @@ form .btn-lg {
     border-color: var(--info-color);
     border-left: 4px solid var(--info-color);
 }
+
+.page-header {
+    text-align: center;
+}
+
+.form-label {
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-label i {
+    font-size: 1.2rem;
+}
+
+.form-control-lg {
+    padding: 16px;
+    font-size: 1.1rem;
+    border-radius: var(--radius-md);
+}
+
+.form-text {
+    font-size: 0.875rem;
+    color: var(--gray-text);
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-text i {
+    color: var(--info-color);
+    flex-shrink: 0;
+}
+
+.invalid-feedback,
+.form-error-message {
+    display: block;
+    color: var(--danger-color);
+    font-size: 0.875rem;
+    margin-top: 8px;
+}
+
+form .btn-lg {
+    padding: 14px 32px;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.mb-4 {
+    margin-bottom: 1.75rem !important;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    border: none;
+    border-left: 4px solid var(--info-color);
+    color: #1e40af;
+    display: flex;
+    align-items: start;
+    gap: 12px;
+}
+
+.alert-info i {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.card.shadow-lg {
+    animation: slideIn 0.4s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    transform: scale(1.01);
+}
+
+.form-control:hover:not(:focus) {
+    border-color: var(--primary-light);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}

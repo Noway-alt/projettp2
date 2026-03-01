@@ -1,52 +1,85 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un Quiz{% endblock %}
+{% block title %}Créer une Question{% endblock %}
 
 {% block body %}
     <div class="container mt-4 fade-in">
         <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
+            <div class="col-md-10 col-lg-8">
                 {# En-tête #}
                 <div class="page-header mb-4">
                     <h1 class="page-title">
-                        <i class="bi bi-plus-circle-fill"></i> Créer un nouveau Quiz
+                        <i class="bi bi-plus-circle-fill"></i> Créer une nouvelle Question
                     </h1>
-                    <p class="page-subtitle">Remplissez les informations ci-dessous</p>
+                    <p class="page-subtitle">Ajoutez une question à votre quiz</p>
                 </div>
 
                 {# Carte du formulaire #}
                 <div class="card shadow-lg">
                     <div class="card-header">
                         <h4 class="mb-0">
-                            <i class="bi bi-pencil-square"></i> Informations du Quiz
+                            <i class="bi bi-question-circle-fill"></i> Informations de la Question
                         </h4>
                     </div>
                     <div class="card-body">
-                        {{ form_start(form) }}
+                        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                         
+                        {# Contenu de la question #}
                         <div class="mb-4">
-                            {{ form_label(form.title, 'Titre du Quiz', {'label_attr': {'class': 'form-label'}}) }}
-                            {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Quiz Symfony Avancé'}}) }}
+                            <label for="{{ form.content.vars.id }}" class="form-label">
+                                <i class="bi bi-chat-quote-fill text-primary"></i> Contenu de la question
+                            </label>
+                            {{ form_widget(form.content, {
+                                'attr': {
+                                    'class': 'form-control',
+                                    'rows': 3,
+                                    'placeholder': 'Ex: Quelle est la capitale de la France ?'
+                                }
+                            }) }}
+                            {{ form_errors(form.content) }}
                             <div class="form-text">
-                                <i class="bi bi-info-circle"></i> Choisissez un titre accrocheur pour votre quiz
+                                <i class="bi bi-info-circle"></i> Posez une question claire et précise
                             </div>
                         </div>
 
+                        {# Quiz associé #}
                         <div class="mb-4">
-                            {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
-                            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 4, 'placeholder': 'Décrivez le contenu de votre quiz...'}}) }}
+                            <label for="{{ form.quiz.vars.id }}" class="form-label">
+                                <i class="bi bi-collection-fill text-primary"></i> Quiz associé
+                            </label>
+                            {{ form_widget(form.quiz, {
+                                'attr': {
+                                    'class': 'form-select form-select-lg'
+                                }
+                            }) }}
+                            {{ form_errors(form.quiz) }}
                             <div class="form-text">
-                                <i class="bi bi-info-circle"></i> Expliquez brièvement le contenu du quiz
+                                <i class="bi bi-info-circle"></i> Sélectionnez le quiz auquel cette question appartient
                             </div>
                         </div>
+
+                        {# Image (optionnel) #}
+                        <div class="mb-4">
+                            <label class="form-label">
+                                <i class="bi bi-image-fill text-primary"></i> Image (optionnel)
+                            </label>
+                            {{ form_widget(form.imageFile) }}
+                            {{ form_errors(form.imageFile) }}
+                            <div class="form-text">
+                                <i class="bi bi-info-circle"></i> Ajoutez une image pour illustrer votre question (JPG, PNG)
+                            </div>
+                        </div>
+
+                        {# Champs cachés éventuels #}
+                        {{ form_rest(form) }}
 
                         {# Boutons d'action #}
                         <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-4">
-                            <a href="{{ path('app_quiz_index') }}" class="btn btn-secondary">
-                                <i class="bi bi-arrow-left"></i> Annuler
+                            <a href="{{ path('app_question_index') }}" class="btn btn-secondary btn-lg">
+                                <i class="bi bi-arrow-left-circle"></i> Annuler
                             </a>
                             <button type="submit" class="btn btn-success btn-lg">
-                                <i class="bi bi-check-circle-fill"></i> Créer le Quiz
+                                <i class="bi bi-check-circle-fill"></i> Créer la Question
                             </button>
                         </div>
 
@@ -57,7 +90,7 @@
                 {# Info supplémentaire #}
                 <div class="alert alert-info mt-4">
                     <i class="bi bi-lightbulb-fill"></i> <strong>Astuce :</strong> 
-                    Après avoir créé votre quiz, n'oubliez pas d'ajouter des questions et des réponses !
+                    Après avoir créé votre question, n'oubliez pas d'ajouter plusieurs réponses (dont au moins une correcte) !
                 </div>
             </div>
         </div>

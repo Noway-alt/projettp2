@@ -1,40 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier le Quiz{% endblock %}
+{% block title %}Modifier la Question{% endblock %}
 
 {% block body %}
     <div class="container mt-4 fade-in">
         <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
+            <div class="col-md-10 col-lg-8">
                 <div class="page-header mb-4">
                     <h1 class="page-title">
-                        <i class="bi bi-pencil-fill"></i> Modifier le Quiz
+                        <i class="bi bi-pencil-fill"></i> Modifier la Question
                     </h1>
-                    <p class="page-subtitle">{{ quiz.title }}</p>
+                    <p class="page-subtitle">{{ question.content|slice(0, 60) }}{% if question.content|length > 60 %}...{% endif %}</p>
                 </div>
 
                 <div class="card shadow-lg">
                     <div class="card-header">
                         <h4 class="mb-0">
-                            <i class="bi bi-pencil-square"></i> Informations du Quiz
+                            <i class="bi bi-question-circle-fill"></i> Informations de la Question
                         </h4>
                     </div>
                     <div class="card-body">
                         {{ form_start(form) }}
                         
                         <div class="mb-4">
-                            {{ form_label(form.title, 'Titre du Quiz', {'label_attr': {'class': 'form-label'}}) }}
-                            {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                            <label for="{{ form.content.vars.id }}" class="form-label">
+                                <i class="bi bi-chat-quote-fill text-primary"></i> Contenu de la question
+                            </label>
+                            {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': 3}}) }}
+                            {{ form_errors(form.content) }}
                         </div>
 
                         <div class="mb-4">
-                            {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
-                            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 4}}) }}
+                            <label for="{{ form.quiz.vars.id }}" class="form-label">
+                                <i class="bi bi-collection-fill text-primary"></i> Quiz associé
+                            </label>
+                            {{ form_widget(form.quiz, {'attr': {'class': 'form-select form-select-lg'}}) }}
+                            {{ form_errors(form.quiz) }}
                         </div>
 
+                        <div class="mb-4">
+                            <label class="form-label">
+                                <i class="bi bi-image-fill text-primary"></i> Image
+                            </label>
+                            {{ form_widget(form.imageFile) }}
+                            {{ form_errors(form.imageFile) }}
+                        </div>
+
+                        {{ form_rest(form) }}
+
                         <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-4">
-                            <a href="{{ path('app_quiz_index') }}" class="btn btn-secondary">
-                                <i class="bi bi-arrow-left"></i> Annuler
+                            <a href="{{ path('app_question_index') }}" class="btn btn-secondary btn-lg">
+                                <i class="bi bi-arrow-left-circle"></i> Annuler
                             </a>
                             <button type="submit" class="btn btn-warning btn-lg">
                                 <i class="bi bi-save-fill"></i> Enregistrer
