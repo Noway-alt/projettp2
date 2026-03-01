@@ -1160,3 +1160,52 @@ textarea.form-control {
 .rounded-lg {
     border-radius: var(--radius-lg);
 }
+
+.form-text {
+    font-size: 0.875rem;
+    color: var(--gray-text);
+    margin-top: 8px;
+}
+
+.form-text i {
+    color: var(--info-color);
+}
+
+form .btn-lg {
+    padding: 14px 32px;
+    font-size: 1.1rem;
+}
+
+.form-label {
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.form-label i {
+    color: var(--primary-color);
+}
+
+.form-control:hover {
+    border-color: var(--primary-light);
+}
+
+.form-control:focus {
+    transform: scale(1.01);
+    transition: var(--transition);
+}
+
+.card.shadow-lg {
+    animation: slideIn 0.4s ease;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    border-color: var(--info-color);
+    border-left: 4px solid var(--info-color);
+}
