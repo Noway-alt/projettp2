@@ -1,13 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Question{% endblock %}
+{% block title %}Modifier le Quiz{% endblock %}
 
 {% block body %}
-    <h1>Edit Question</h1>
+    <div class="container mt-4 fade-in">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="page-header mb-4">
+                    <h1 class="page-title">
+                        <i class="bi bi-pencil-fill"></i> Modifier le Quiz
+                    </h1>
+                    <p class="page-subtitle">{{ quiz.title }}</p>
+                </div>
 
-    {{ include('question/_form.html.twig', {'button_label': 'Update'}) }}
+                <div class="card shadow-lg">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="bi bi-pencil-square"></i> Informations du Quiz
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(form) }}
+                        
+                        <div class="mb-4">
+                            {{ form_label(form.title, 'Titre du Quiz', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                        </div>
 
-    <a href="{{ path('app_question_index') }}">back to list</a>
+                        <div class="mb-4">
+                            {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 4}}) }}
+                        </div>
 
-    {{ include('question/_delete_form.html.twig') }}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-4">
+                            <a href="{{ path('app_quiz_index') }}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Annuler
+                            </a>
+                            <button type="submit" class="btn btn-warning btn-lg">
+                                <i class="bi bi-save-fill"></i> Enregistrer
+                            </button>
+                        </div>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

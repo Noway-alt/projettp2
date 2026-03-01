@@ -1,11 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Question{% endblock %}
+{% block title %}Créer un Quiz{% endblock %}
 
 {% block body %}
-    <h1>Create new Question</h1>
+    <div class="container mt-4 fade-in">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                {# En-tête #}
+                <div class="page-header mb-4">
+                    <h1 class="page-title">
+                        <i class="bi bi-plus-circle-fill"></i> Créer un nouveau Quiz
+                    </h1>
+                    <p class="page-subtitle">Remplissez les informations ci-dessous</p>
+                </div>
 
-    {{ include('question/_form.html.twig') }}
+                {# Carte du formulaire #}
+                <div class="card shadow-lg">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="bi bi-pencil-square"></i> Informations du Quiz
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(form) }}
+                        
+                        <div class="mb-4">
+                            {{ form_label(form.title, 'Titre du Quiz', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.title, {'attr': {'class': 'form-control', 'placeholder': 'Ex: Quiz Symfony Avancé'}}) }}
+                            <div class="form-text">
+                                <i class="bi bi-info-circle"></i> Choisissez un titre accrocheur pour votre quiz
+                            </div>
+                        </div>
 
-    <a href="{{ path('app_question_index') }}">back to list</a>
+                        <div class="mb-4">
+                            {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 4, 'placeholder': 'Décrivez le contenu de votre quiz...'}}) }}
+                            <div class="form-text">
+                                <i class="bi bi-info-circle"></i> Expliquez brièvement le contenu du quiz
+                            </div>
+                        </div>
+
+                        {# Boutons d'action #}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-between mt-4">
+                            <a href="{{ path('app_quiz_index') }}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Annuler
+                            </a>
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="bi bi-check-circle-fill"></i> Créer le Quiz
+                            </button>
+                        </div>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+
+                {# Info supplémentaire #}
+                <div class="alert alert-info mt-4">
+                    <i class="bi bi-lightbulb-fill"></i> <strong>Astuce :</strong> 
+                    Après avoir créé votre quiz, n'oubliez pas d'ajouter des questions et des réponses !
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
