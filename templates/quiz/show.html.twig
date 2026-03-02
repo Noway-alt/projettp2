@@ -1,30 +1,153 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Quiz{% endblock %}
+{% block title %}{{ quiz.title }}{% endblock %}
 
 {% block body %}
-    <h1>Quiz</h1>
+    <div class="container mt-4 fade-in">
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="page-header mb-4">
+                    <h1 class="page-title">
+                        <i class="bi bi-eye-fill"></i> Détails du Quiz
+                    </h1>
+                </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ quiz.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ quiz.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ quiz.description }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <div class="card shadow-lg mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">
+                            <i class="bi bi-trophy-fill"></i> {{ quiz.title }}
+                        </h4>
+                        <span class="badge bg-primary">ID: {{ quiz.id }}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <h5 class="text-muted mb-2">
+                                <i class="bi bi-card-text"></i> Description
+                            </h5>
+                            <p class="lead">
+                                {% if quiz.description %}
+                                    {{ quiz.description }}
+                                {% else %}
+                                    <span class="text-muted fst-italic">Aucune description</span>
+                                {% endif %}
+                            </p>
+                        </div>
 
-    <a href="{{ path('app_quiz_index') }}">back to list</a>
+                        <hr>
 
-    <a href="{{ path('app_quiz_edit', {'id': quiz.id}) }}">edit</a>
+                        <div class="row text-center mb-4">
+                            <div class="col-md-4">
+                                <div class="stat-box">
+                                    <div class="stat-icon">
+                                        <i class="bi bi-question-circle-fill"></i>
+                                    </div>
+                                    <div class="stat-value">{{ quiz.questions|length }}</div>
+                                    <div class="stat-label">Question{{ quiz.questions|length > 1 ? 's' : '' }}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="stat-box">
+                                    <div class="stat-icon text-success">
+                                        <i class="bi bi-people-fill"></i>
+                                    </div>
+                                    <div class="stat-value">{{ quiz.quizAttempts|length }}</div>
+                                    <div class="stat-label">Tentative{{ quiz.quizAttempts|length > 1 ? 's' : '' }}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="stat-box">
+                                    <div class="stat-icon text-warning">
+                                        <i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <div class="stat-value">
+                                        {% if quiz.quizAttempts|length > 0 %}
+                                            {% set totalScore = 0 %}
+                                            {% for attempt in quiz.quizAttempts %}
+                                                {% if attempt.completedAt %}
+                                                    {% set totalScore = totalScore + (attempt.score / attempt.totalQuestions * 100) %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {{ (totalScore / quiz.quizAttempts|length)|round }}%
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </div>
+                                    <div class="stat-label">Score moyen</div>
+                                </div>
+                            </div>
+                        </div>
 
-    {{ include('quiz/_delete_form.html.twig') }}
+                        <hr>
+
+                        <div class="mb-3">
+                            <h5 class="mb-3">
+                                <i class="bi bi-list-ol"></i> Questions associées
+                            </h5>
+                            {% if quiz.questions|length > 0 %}
+                                <div class="list-group">
+                                    {% for question in quiz.questions %}
+                                        <div class="list-group-item list-group-item-action">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <span class="badge bg-secondary me-2">Q{{ loop.index }}</span>
+                                                    <strong>{{ question.content|slice(0, 80) }}{% if question.content|length > 80 %}...{% endif %}</strong>
+                                                </div>
+                                                <div>
+                                                    {% if question.imageName %}
+                                                        <span class="badge bg-info">
+                                                            <i class="bi bi-image"></i> Image
+                                                        </span>
+                                                    {% endif %}
+                                                    <span class="badge bg-primary">
+                                                        {{ question.answers|length }} réponse{{ question.answers|length > 1 ? 's' : '' }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div class="alert alert-warning">
+                                    <i class="bi bi-exclamation-triangle"></i> 
+                                    Aucune question associée à ce quiz pour le moment.
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                            <a href="{{ path('app_quiz_index') }}" class="btn btn-secondary btn-lg">
+                                <i class="bi bi-arrow-left-circle"></i> Retour à la liste
+                            </a>
+                            <div class="d-flex gap-2">
+                                <a href="{{ path('app_quiz_edit', {'id': quiz.id}) }}" class="btn btn-warning btn-lg">
+                                    <i class="bi bi-pencil-fill"></i> Modifier
+                                </a>
+                                <a href="{{ path('app_quiz_take_start', {'id': quiz.id}) }}" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-play-circle-fill"></i> Passer le quiz
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-danger shadow-sm">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-trash-fill"></i> Zone dangereuse
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-3">
+                            La suppression de ce quiz est irréversible. Toutes les questions et tentatives associées seront également supprimées.
+                        </p>
+                        {{ include('quiz/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
